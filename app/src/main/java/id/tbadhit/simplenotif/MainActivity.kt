@@ -2,9 +2,12 @@ package id.tbadhit.simplenotif
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -25,8 +28,14 @@ class MainActivity : AppCompatActivity() {
 
     // aksi untuk onClick pada button
     fun sendNotification(view: View) {
+        // Pending Intent
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://dicoding.com"))
+        val pendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
+        //---
+
         val mNotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val mBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setContentIntent(pendingIntent) // Pending Intent
             .setSmallIcon(R.drawable.ic_notifications_white_48px)
             .setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.ic_notifications_white_48px))
             .setContentTitle(resources.getString(R.string.content_title))
